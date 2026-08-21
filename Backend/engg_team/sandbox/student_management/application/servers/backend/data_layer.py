@@ -1,0 +1,1 @@
+from student_management.application.schemas import StudentSchema from student_management.application.services.repos.student_repo import StudentRepo def create_student(student: StudentSchema, db_session): return StudentRepo.create_student(student, db_session)

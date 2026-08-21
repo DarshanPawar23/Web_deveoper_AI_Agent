@@ -1,315 +1,148 @@
 {
-  // Display name for this crew
   "name": "engg_team",
-
-  // Agents to include — each must have a matching agents/<name>.jsonc file
-  "agents": ["senior_ai_project_manager_and_", "senior_software_solution_archi", "senior_backend_software_engine", "senior_frontend_engineer_and_u", "senior_software_code_reviewer_", "senior_software_test_engineer_"],
-
-  // Task definitions — executed in order for sequential process
+  "agents": [
+    "senior_software_solution_archi",
+    "senior_backend_software_engine",
+    "senior_frontend_engineer_and_u",
+    "senior_software_code_reviewer_",
+    "senior_software_test_engineer_"
+  ],
   "tasks": [
     {
-      // Task identifier
-      "name": "analyze_the_users_software_task",
-
-      // What the task should accomplish
-      // Use {placeholder} inputs here; crewai run prompts for missing values
-      "description": "Analyze the user's software project {project} request and act as the central orchestrator of the autonomous software engineering team. Extract and validate all functional requirements, non-functional requirements, business rules, user roles, technical constraints, and expected deliverables. Create a complete project execution plan by decomposing the project into logical development phases and assigning responsibilities to the appropriate specialized agents, including the Architecture Agent, Backend Developer Agent, Frontend Developer Agent, Code Reviewer Agent, and Tester Agent. Define the execution order, task dependencies, communication flow, success criteria, and project milestones. Throughout the workflow, coordinate agent collaboration, monitor task progress, collect outputs, resolve dependencies, initiate review and testing cycles, reassign failed tasks for correction when necessary, and determine when the entire project satisfies all quality standards and is ready for final delivery. The Manager Agent must never generate implementation code and is solely responsible for planning, orchestration, coordination, decision-making, and project completion.",
-
-      // Clear definition of what the output should look like
-      "expected_output": "A comprehensive Project Execution Plan containing validated project requirements, functional and non-functional specifications, identified user roles, feature breakdown, software modules, development roadmap, agent assignments, execution workflow, task dependency graph, milestones, deliverables, quality gates, success criteria, risk assessment, and project completion strategy. This document will serve as the master blueprint that guides every specialized AI agent throughout the software development lifecycle.",
-      "output_file":"project_execution_plan.md",
-      // Optional task guardrail(s) validate output before completion
-      // Use "guardrail" for one rule or "guardrails" for many
-      // Failed guardrails retry up to guardrail_max_retries times
-      // "guardrail": "Every factual claim needs context support.",
-      // "guardrails": [
-      //   "Every factual claim must be supported by context.",
-      //   "The answer must match the expected output format."
-      // ],
-      // "guardrail_max_retries": 2,
-
-      // Advanced task options:
-      // Docs: https://docs.crewai.com/concepts/tasks
-      // "type": "ConditionalTask",
-      // "condition": { "python": "my_project.conditions.should_run" },
-      // "output_json": { "python": "my_project.models.ReportOutput" },
-      // "output_pydantic": null,
-      // "response_model": null,
-      // "converter_cls": { "python": "my_project.converters.CustomConverter" },
-      // "markdown": false,
-      // "input_files": { "brief": "data/brief.txt" },
-      // "security_config": {},
-
-      // Which agent handles this task
-      "agent": "senior_ai_project_manager_and_"
-
-      // "tools": [],
-      // "human_input": false,
-      // "async_execution": false
-    }
-,
-    {
-      // Task identifier
-      "name": "analyze_the_project_execution_task",
-
-      // What the task should accomplish
-      // Use {placeholder} inputs here; crewai run prompts for missing values
-      "description": "Analyze the {project} Execution Plan produced by the Manager Agent and design a complete, scalable, secure, maintainable, and production-ready software architecture for the requested full-stack application. Evaluate the functional and non-functional requirements, business rules, technical constraints, scalability needs, security requirements, deployment strategy, and future extensibility before making any architectural decisions.Select the most appropriate software architecture pattern (Monolith, Microservices, MVC, Clean Architecture, Repository Pattern, Service Layer, or a suitable hybrid), recommend the optimal technology stack for the frontend, backend, database, authentication, caching, and deployment, and define the communication flow between all system components.Design the complete project structure, including folder organization, database schema, entity relationships, API contracts, authentication and authorization strategy, middleware architecture, error handling strategy, validation approach, logging strategy, configuration management, dependency management, environment configuration, testing strategy, security guidelines, coding standards, deployment workflow, and development roadmap.Generate comprehensive architecture documentation that serves as the single source of truth for all subsequent development agents. Ensure that every architectural decision follows software engineering best practices, SOLID principles, Clean Architecture concepts, scalability, maintainability, performance optimization, and production readiness. The Architecture Agent must never implement application source code and is responsible only for technical design and architectural planning.",
-
-      // Clear definition of what the output should look like
-      "expected_output": "A complete Software Architecture Blueprint containing:\u2022 architecture.md\u2022 Executive Architecture Summary\u2022 Functional & Non-Functional Architecture\u2022 Selected Architecture Pattern\u2022 Technology Stack Recommendation\u2022 Frontend Architecture\u2022 Backend Architecture\u2022 Database Design\u2022 Entity Relationship Diagram (ERD)\u2022 Database Schema\u2022 Folder Structure\u2022 API Contract & Endpoint Specifications\u2022 Authentication & Authorization Strategy\u2022 Middleware Architecture\u2022 Validation Strategy\u2022 Error Handling Strategy\u2022 Logging & Monitoring Strategy\u2022 Configuration Management\u2022 Dependency Management\u2022 Security Guidelines\u2022 Performance Considerations\u2022 Deployment Architecture\u2022 Development Roadmap\u2022 Coding Standards\u2022 Best Practices\u2022 Technical RecommendationsThis document becomes the master technical blueprint that guides the Backend Developer, Frontend Developer, Code Reviewer, and Tester Agents throughout the software development lifecycle.",
-      "output_file":"architecture.md",
-      // Optional task guardrail(s) validate output before completion
-      // Use "guardrail" for one rule or "guardrails" for many
-      // Failed guardrails retry up to guardrail_max_retries times
-      // "guardrail": "Every factual claim needs context support.",
-      // "guardrails": [
-      //   "Every factual claim must be supported by context.",
-      //   "The answer must match the expected output format."
-      // ],
-      // "guardrail_max_retries": 2,
-
-      // Advanced task options:
-      // Docs: https://docs.crewai.com/concepts/tasks
-      // "type": "ConditionalTask",
-      // "condition": { "python": "my_project.conditions.should_run" },
-      // "output_json": { "python": "my_project.models.ReportOutput" },
-      // "output_pydantic": null,
-      // "response_model": null,
-      // "converter_cls": { "python": "my_project.converters.CustomConverter" },
-      // "markdown": false,
-      // "input_files": { "brief": "data/brief.txt" },
-      // "security_config": {},
-
-      // Which agent handles this task
+      "name": "analyze_requirements_and_specifications",
+      "description": "Analyze the user's software project {project} request. Extract and validate all functional requirements, non-functional requirements, business rules, user roles, technical constraints, and expected deliverables.",
+      "expected_output": "A validated requirements document mapping out user roles, functional specifications, non-functional constraints, and business logic rules.",
+      "output_file": "docs/requirements_spec.md",
       "agent": "senior_software_solution_archi"
-
-      // "tools": [],
-      // "human_input": false,
-      // "async_execution": false
-    }
-,
+    },
     {
-      // Task identifier
-      "name": "develop_the_complete_backend_task",
-
-      // What the task should accomplish
-      // Use {placeholder} inputs here; crewai run prompts for missing values
-      "description": "Develop the complete backend application by strictly following the Software Architecture Blueprint produced by the Architecture Agent. Implement a scalable, secure, maintainable, and production-ready backend that satisfies all functional and non-functional requirements defined in the Project Execution Plan.Design and implement the complete backend structure, including database models, entity relationships, controllers, services, repositories, schemas, routes, middleware, authentication, authorization, business logic, request validation, exception handling, logging, configuration management, dependency injection, environment configuration, API documentation, and database migrations. Develop secure and well-documented RESTful APIs with proper HTTP status codes, input validation, error handling, and standardized response models.Follow Clean Architecture, Repository Pattern, Service Layer, SOLID principles, and software engineering best practices throughout the implementation. Ensure the backend is modular, reusable, scalable, testable, and production-ready. Generate Docker configuration, dependency files, automated unit tests, integration tests, API documentation, and project documentation required for deployment.The Backend Developer Agent must focus exclusively on backend development, must not modify frontend source code, and must implement the architecture exactly as defined by the Architecture Agent while producing clean, maintainable, and enterprise-grade code.",
-
-      // Clear definition of what the output should look like
-      "expected_output": "A complete production-ready backend project containing:\u2022 backend/\u2022 Controllers\u2022 Services\u2022 Repositories\u2022 Models\u2022 Schemas\u2022 Routes\u2022 Middlewares\u2022 Utilities\u2022 Authentication & Authorization\u2022 Database Models\u2022 Database Migrations\u2022 CRUD APIs\u2022 Business Logic\u2022 Request Validation\u2022 Exception Handling\u2022 Logging\u2022 Configuration Management\u2022 Dependency Injection\u2022 Environment Configuration (.env.example)\u2022 API Documentation (OpenAPI/Swagger)\u2022 requirements.txt\u2022 Dockerfile\u2022 docker-compose backend configuration\u2022 Unit Tests\u2022 Integration Tests\u2022 README.md\u2022 Complete backend source code following the approved architecture and coding standards.",
-      "output_file":"backend/",
-      // Optional task guardrail(s) validate output before completion
-      // Use "guardrail" for one rule or "guardrails" for many
-      // Failed guardrails retry up to guardrail_max_retries times
-      // "guardrail": "Every factual claim needs context support.",
-      // "guardrails": [
-      //   "Every factual claim must be supported by context.",
-      //   "The answer must match the expected output format."
-      // ],
-      // "guardrail_max_retries": 2,
-
-      // Advanced task options:
-      // Docs: https://docs.crewai.com/concepts/tasks
-      // "type": "ConditionalTask",
-      // "condition": { "python": "my_project.conditions.should_run" },
-      // "output_json": { "python": "my_project.models.ReportOutput" },
-      // "output_pydantic": null,
-      // "response_model": null,
-      // "converter_cls": { "python": "my_project.converters.CustomConverter" },
-      // "markdown": false,
-      // "input_files": { "brief": "data/brief.txt" },
-      // "security_config": {},
-
-      // Which agent handles this task
-      "agent": "senior_backend_software_engine",
-
-      // Task outputs used as context
-      "context": ["analyze_the_users_software_task", "analyze_the_project_execution_task"]
-
-      // "tools": [],
-      // "human_input": false,
-      // "async_execution": false
-    }
-,
+      "name": "design_system_architecture_and_data_models",
+      "description": "Select the optimal software architecture pattern and design the system data models. Define the complete database schema, entity relationships, and technical stack specifications based on the requirements.",
+      "expected_output": "Comprehensive database schema design, system architecture blueprints, and entity relationship diagrams.",
+      "output_file": "docs/architecture_blueprint.md",
+      "agent": "senior_software_solution_archi"
+    },
     {
-      // Task identifier
-      "name": "develop_the_complete_frontend_task",
+      "name": "define_api_contracts_and_routing_structures",
+      "description": "Design all RESTful API contracts, detailed endpoint specifications, request/response payloads, validation rules, error handling workflows, folder structure conventions, and the global authentication strategy.",
+      "expected_output": "Complete OpenAPI/Swagger specifications, folder structure blueprint, error matrix, and application security guidelines.",
+      "output_file": "docs/api_contract.md",
+      "agent": "senior_software_solution_archi"
+    },
 
-      // What the task should accomplish
-      // Use {placeholder} inputs here; crewai run prompts for missing values
-      "description": "Develop the complete frontend application by strictly following the Software Architecture Blueprint produced by the Architecture Agent and integrating with the APIs implemented by the Backend Developer Agent. Build a modern, responsive, accessible, scalable, and production-ready user interface that fulfills all functional and non-functional requirements defined in the Project Execution Plan.Design and implement reusable UI components, pages, layouts, routing, state management, authentication flows, API integration, forms, dashboards, data visualization, responsive navigation, loading states, error handling, input validation, notifications, and user interactions while ensuring consistency with the approved architecture and design principles.Organize the application using a clean and maintainable folder structure that includes reusable components, hooks, services, contexts, layouts, assets, utilities, and styles. Implement secure authentication and authorization flows, protected routes, session management, API communication, error boundaries, and optimized rendering techniques.Follow modern frontend development best practices, component-based architecture, SOLID principles where applicable, accessibility standards (WCAG), responsive design principles, performance optimization, code splitting, lazy loading, reusable design patterns, and clean coding standards. Ensure the application is cross-browser compatible, mobile-friendly, maintainable, scalable, and production-ready.Generate all required frontend source code, dependency configuration, environment configuration, API service layer, reusable components, project documentation, Docker configuration, and testing setup. The Frontend Developer Agent must focus exclusively on frontend development, must not modify backend source code or architecture decisions, and must faithfully implement the technical blueprint defined by the Architecture Agent while integrating seamlessly with the Backend Developer Agent's APIs.",
-
-      // Clear definition of what the output should look like
-      "expected_output": "A complete production-ready frontend project containing:\u2022 frontend/\u2022 Components\u2022 Pages\u2022 Layouts\u2022 Hooks\u2022 Contexts\u2022 Services\u2022 Assets\u2022 Styles\u2022 Routing Configuration\u2022 State Management\u2022 Authentication & Authorization UI\u2022 Protected Routes\u2022 API Integration Layer\u2022 Forms & Validation\u2022 Responsive Dashboard\u2022 Reusable UI Components\u2022 Loading States\u2022 Error Handling\u2022 Error Boundaries\u2022 Notification System\u2022 Environment Configuration (.env.example)\u2022 package.json\u2022 Dockerfile\u2022 Frontend README.md\u2022 Unit Test Setup\u2022 Production-ready frontend source code fully integrated with the backend APIs and following the approved software architecture.",
-      "output_file":"frontend/",
-      // Optional task guardrail(s) validate output before completion
-      // Use "guardrail" for one rule or "guardrails" for many
-      // Failed guardrails retry up to guardrail_max_retries times
-      // "guardrail": "Every factual claim needs context support.",
-      // "guardrails": [
-      //   "Every factual claim must be supported by context.",
-      //   "The answer must match the expected output format."
-      // ],
-      // "guardrail_max_retries": 2,
-
-      // Advanced task options:
-      // Docs: https://docs.crewai.com/concepts/tasks
-      // "type": "ConditionalTask",
-      // "condition": { "python": "my_project.conditions.should_run" },
-      // "output_json": { "python": "my_project.models.ReportOutput" },
-      // "output_pydantic": null,
-      // "response_model": null,
-      // "converter_cls": { "python": "my_project.converters.CustomConverter" },
-      // "markdown": false,
-      // "input_files": { "brief": "data/brief.txt" },
-      // "security_config": {},
-
-      // Which agent handles this task
-      "agent": "senior_frontend_engineer_and_u",
-
-      // Task outputs used as context
-      "context": ["analyze_the_users_software_task", "analyze_the_project_execution_task", "develop_the_complete_backend_task"]
-
-      // "tools": [],
-      // "human_input": false,
-      // "async_execution": false
-    }
-,
     {
-      // Task identifier
-      "name": "perform_a_comprehensive_review_task",
-
-      // What the task should accomplish
-      // Use {placeholder} inputs here; crewai run prompts for missing values
-      "description": "Perform a comprehensive review of the complete software project generated by the Backend Developer Agent and Frontend Developer Agent while ensuring full compliance with the Software Architecture Blueprint and Project Execution Plan. Review the entire codebase, including backend services, frontend application, database implementation, API contracts, project structure, configuration files, documentation, Docker configuration, dependency management, and supporting artifacts.Evaluate the project against professional software engineering standards by verifying adherence to Clean Architecture, SOLID principles, DRY, KISS, separation of concerns, design patterns, naming conventions, coding standards, maintainability, scalability, readability, and modularity. Detect architectural violations, inconsistent implementations, duplicate code, dead code, code smells, excessive complexity, missing files, dependency issues, improper error handling, insufficient validation, insecure coding practices, authentication and authorization flaws, API inconsistencies, performance bottlenecks, configuration problems, and documentation gaps.Validate that every generated component aligns with the approved architecture and that backend and frontend implementations integrate correctly without introducing technical debt. The Code Reviewer Agent must never generate or modify the initial application source code. Instead, produce a structured review report containing identified issues, severity levels, affected modules, architectural observations, security findings, performance recommendations, code quality metrics, and actionable improvement suggestions. This report will be used by the Manager Agent to assign corrective tasks to the appropriate development agent before the project proceeds to the testing phase.",
-
-      // Clear definition of what the output should look like
-      "expected_output": "A comprehensive Code Review Report containing:\u2022 Executive Review Summary\u2022 Architecture Compliance Report\u2022 Code Quality Assessment\u2022 SOLID Principles Validation\u2022 Clean Architecture Validation\u2022 DRY & KISS Compliance\u2022 Naming Convention Review\u2022 Code Smell Analysis\u2022 Duplicate Code Detection\u2022 Dead Code Report\u2022 Security Vulnerability Assessment\u2022 Authentication & Authorization Review\u2022 API Contract Validation\u2022 Database Design Review\u2022 Error Handling Assessment\u2022 Input Validation Review\u2022 Performance Analysis\u2022 Dependency Analysis\u2022 Project Structure Validation\u2022 Missing Files Report\u2022 Documentation Review\u2022 Docker & Configuration Review\u2022 Severity Classification (Critical, High, Medium, Low)\u2022 Recommended Fixes\u2022 Approval Status (Approved / Requires Changes)This report serves as the quality gate before the project proceeds to the Software Testing phase.",
-      "output_file":"code_review_report.md",
-      // Optional task guardrail(s) validate output before completion
-      // Use "guardrail" for one rule or "guardrails" for many
-      // Failed guardrails retry up to guardrail_max_retries times
-      // "guardrail": "Every factual claim needs context support.",
-      // "guardrails": [
-      //   "Every factual claim must be supported by context.",
-      //   "The answer must match the expected output format."
-      // ],
-      // "guardrail_max_retries": 2,
-
-      // Advanced task options:
-      // Docs: https://docs.crewai.com/concepts/tasks
-      // "type": "ConditionalTask",
-      // "condition": { "python": "my_project.conditions.should_run" },
-      // "output_json": { "python": "my_project.models.ReportOutput" },
-      // "output_pydantic": null,
-      // "response_model": null,
-      // "converter_cls": { "python": "my_project.converters.CustomConverter" },
-      // "markdown": false,
-      // "input_files": { "brief": "data/brief.txt" },
-      // "security_config": {},
-
-      // Which agent handles this task
-      "agent": "senior_software_code_reviewer_",
-
-      // Task outputs used as context
-      "context": ["analyze_the_users_software_task", "analyze_the_project_execution_task", "develop_the_complete_backend_task", "develop_the_complete_frontend_task"]
-
-      // "tools": [],
-      // "human_input": false,
-      // "async_execution": false
-    }
-,
+      "name": "develop_backend_models_and_repositories",
+      "description": "Implement the backend data layer. Create database models, schemas, migrations, and repositories for data access following the approved architecture blueprint. Create and update source files using WriteFileTool and UpdateFileTool.",
+      "expected_output": "Functional backend source code.",
+      "agent": "senior_backend_software_engine"
+    },
     {
-      // Task identifier
-      "name": "perform_comprehensive_endtoend_validation_task",
+      "name": "develop_backend_services_and_business_logic",
+      "description": "Implement backend services, business logic, and transactions. Create and update source files using WriteFileTool and UpdateFileTool.",
+      "expected_output": "Functional backend services.",
+      "agent": "senior_backend_software_engine"
+    },
+    {
+      "name": "develop_backend_controllers_and_routes",
+      "description": "Implement controllers, routes, middleware, validation, configuration, and REST APIs. Create and update source files using WriteFileTool and UpdateFileTool.",
+      "expected_output": "Functional backend API.",
+      "agent": "senior_backend_software_engine"
+    },
 
-      // What the task should accomplish
-      // Use {placeholder} inputs here; crewai run prompts for missing values
-      "description": "Perform comprehensive end-to-end validation of the complete full-stack application after successful code review. Execute the entire project inside the shared workspace and Docker environment by building, configuring, and running both the backend and frontend applications. Verify that all generated components function correctly and conform to the Software Architecture Blueprint, Project Execution Plan, and Code Review Report.Execute automated and manual quality assurance processes, including application build verification, dependency validation, backend startup, frontend startup, database connectivity, API functionality, authentication and authorization workflows, CRUD operations, routing, user interface behavior, configuration management, environment variables, Docker containers, and service communication.Run unit tests, integration tests, API tests, and end-to-end validation while detecting syntax errors, runtime exceptions, build failures, dependency conflicts, missing imports, broken APIs, database errors, HTTP 404/500 responses, CORS issues, authentication failures, frontend rendering problems, JavaScript console errors, network failures, Docker configuration issues, and deployment-related problems.Collect execution logs, test results, stack traces, screenshots (when applicable), and detailed diagnostic information for every detected issue. Classify each issue based on severity, affected module, root cause, reproducibility, and recommended corrective action.The Tester Agent must never modify application source code or implement new features. Instead, generate a comprehensive testing report and structured bug report for the Manager Agent. If failures are detected, clearly identify whether the issue belongs to the Backend Developer Agent or the Frontend Developer Agent so the Manager Agent can assign corrective work before initiating another review and testing cycle. The application should only be marked as production-ready when all critical and high-severity issues have been successfully resolved.",
+    {
+      "name": "review_backend_codebase",
+      "description": "Review the generated backend code for architecture, security, code quality, SOLID, DRY, validation, dependency health, and best practices.",
+      "expected_output": "Backend review report.",
+      "output_file": "docs/backend_review_report.md",
+      "agent": "senior_software_code_reviewer_"
+    },
 
-      // Clear definition of what the output should look like
-      "expected_output": "A comprehensive Software Testing Report containing:\u2022 Executive Testing Summary\u2022 Test Execution Report\u2022 Build Verification Results\u2022 Docker Validation Report\u2022 Backend Validation Report\u2022 Frontend Validation Report\u2022 API Testing Results\u2022 Authentication & Authorization Testing\u2022 Database Connectivity Report\u2022 CRUD Operation Validation\u2022 Unit Test Results\u2022 Integration Test Results\u2022 End-to-End Test Results\u2022 Performance Observations\u2022 Runtime Error Report\u2022 Build Failure Report\u2022 Dependency Validation Report\u2022 HTTP Error Report (404, 500, etc.)\u2022 Console Error Report\u2022 Configuration Validation\u2022 Bug Report\u2022 Root Cause Analysis\u2022 Severity Classification (Critical, High, Medium, Low)\u2022 Affected Modules\u2022 Recommended Fixes\u2022 Deployment Readiness Assessment\u2022 Final Testing Status (Passed / Failed)This report serves as the final quality assurance document before the Manager Agent determines whether the project is complete or requires another development iteration.",
-      "output_file":"testing_report.md",
-      // Optional task guardrail(s) validate output before completion
-      // Use "guardrail" for one rule or "guardrails" for many
-      // Failed guardrails retry up to guardrail_max_retries times
-      // "guardrail": "Every factual claim needs context support.",
-      // "guardrails": [
-      //   "Every factual claim must be supported by context.",
-      //   "The answer must match the expected output format."
-      // ],
-      // "guardrail_max_retries": 2,
+    {
+      "name": "conditional_backend_refinement_gate",
+      "type": "ConditionalTask",
+      "condition": {
+        "python": "conditions.backend_conditions.should_retry_backend"
+      },
+      "description": "Fix backend issues found during review.",
+      "expected_output": "Updated backend source code.",
+      "agent": "senior_backend_software_engine"
+    },
 
-      // Advanced task options:
-      // Docs: https://docs.crewai.com/concepts/tasks
-      // "type": "ConditionalTask",
-      // "condition": { "python": "my_project.conditions.should_run" },
-      // "output_json": { "python": "my_project.models.ReportOutput" },
-      // "output_pydantic": null,
-      // "response_model": null,
-      // "converter_cls": { "python": "my_project.converters.CustomConverter" },
-      // "markdown": false,
-      // "input_files": { "brief": "data/brief.txt" },
-      // "security_config": {},
+    {
+      "name": "develop_frontend_components_and_layouts",
+      "description": "Build layouts, reusable components, responsive UI, and styling. Create and update files using WriteFileTool and UpdateFileTool.",
+      "expected_output": "Frontend components.",
+      "agent": "senior_frontend_engineer_and_u"
+    },
 
-      // Which agent handles this task
-      "agent": "senior_software_test_engineer_",
+    {
+      "name": "develop_frontend_pages_and_state",
+      "description": "Implement pages, routing, contexts, protected routes, and state management using WriteFileTool and UpdateFileTool.",
+      "expected_output": "Frontend pages.",
+      "agent": "senior_frontend_engineer_and_u"
+    },
 
-      // Task outputs used as context
-      "context": ["analyze_the_users_software_task", "analyze_the_project_execution_task", "develop_the_complete_backend_task", "develop_the_complete_frontend_task", "perform_a_comprehensive_review_task"]
+    {
+      "name": "integrate_frontend_authentication_and_apis",
+      "description": "Integrate frontend with backend APIs, authentication, session management, and validation using WriteFileTool and UpdateFileTool.",
+      "expected_output": "Integrated frontend.",
+      "agent": "senior_frontend_engineer_and_u"
+    },
 
-      // "tools": [],
-      // "human_input": false,
-      // "async_execution": false
+    {
+      "name": "review_full_stack_integration",
+      "description": "Review frontend quality, API integration, responsiveness, environment configuration, and architecture compliance.",
+      "expected_output": "Frontend review report.",
+      "output_file": "docs/full_stack_review_report.md",
+      "agent": "senior_software_code_reviewer_"
+    },
+
+    {
+      "name": "conditional_frontend_refinement_gate",
+      "type": "ConditionalTask",
+      "condition": {
+        "python": "conditions.frontend_conditions.should_retry_frontend"
+      },
+      "description": "Fix frontend issues found during review.",
+      "expected_output": "Updated frontend source code.",
+      "agent": "senior_frontend_engineer_and_u"
+    },
+
+    {
+      "name": "validate_and_test_integrated_application",
+      "description": "Run the application, install dependencies if needed, execute unit tests, integration tests, API tests, and verify the project.",
+      "expected_output": "Testing report.",
+      "output_file": "docs/testing_report.md",
+      "agent": "senior_software_test_engineer_"
+    },
+
+    {
+      "name": "conditional_test_rework_gate",
+      "type": "ConditionalTask",
+      "condition": {
+        "python": "conditions.testing_conditions.should_retry_testing"
+      },
+      "description": "Coordinate fixes when testing fails.",
+      "expected_output": "Updated application after fixing test failures.",
+      "agent": "senior_ai_project_manager_and_"
+    },
+
+    {
+      "name": "final_project_completion_arbitration",
+      "description": "Review all reports and decide whether the project is complete and production ready.",
+      "expected_output": "Final delivery report.",
+      "output_file": "docs/final_delivery_manifest.md",
+      "agent": "senior_ai_project_manager_and_"
     }
-
   ],
-
-  // Execution process
-  // "sequential" — tasks run in order, each receiving prior task outputs
-  // "hierarchical" — a manager agent delegates tasks (requires manager_llm)
-  "process": "sequential",
-
-  // Enable verbose logging during execution
+  "process": "hierarchical",
+  "manager_agent": "senior_ai_project_manager_and_",
+  "manager_llm": "groq/llama-3.3-70b-versatile",
   "verbose": true,
-
-  // Enable crew memory — persists context and learnings across tasks
-  "memory": true,
-
-  // Automatically plan the execution strategy before running tasks
-  // "planning": false,
-
-  // LLM for the planning step (used when planning is true)
-  // "planning_llm": "openai/gpt-4o",
-
-  // LLM for the manager agent (required when process is "hierarchical")
-  // "manager_llm": "openai/gpt-4o",
-
-  // Crew-level LLM fields also accept object form for custom endpoints
-  // "chat_llm": {"model": "llama3", "provider": "ollama", "base_url": "http://localhost:11434"},
-
-  // Advanced crew options:
-  // Docs: https://docs.crewai.com/concepts/crews
-  // For hierarchical crews, manager_agent can reference an agents/<name>.jsonc file
-  // that is not included in the "agents" list.
-  // "manager_agent": "senior_ai_project_manager_and_",
-  // "before_kickoff_callbacks": [{"python": "my_project.callbacks.before_kickoff"}],
-  // "after_kickoff_callbacks": [{"python": "my_project.callbacks.after_kickoff"}],
-  // "function_calling_llm": "openai/gpt-4o-mini",
-  // "max_rpm": null,
-  // "cache": true,
-  // "knowledge_sources": [],
-  // "embedder": {},
-  // "output_log_file": "crew.log",
-  // "stream": false,
-  // "tracing": false,
-  // "security_config": {},
-
-  // Optional runtime input defaults.
-  // Use {placeholder} in agent or task text, for example:
-  // "description": "Research {topic} and write a brief"
-  // `crewai run` prompts for any placeholders missing from this object.
+  "memory": false,
+  "planning": false,
+  // "planning_llm": "groq/llama-3.3-70b-versatile",
+  "cache": true,
+  "max_rpm": 60,
   "inputs": {}
 }

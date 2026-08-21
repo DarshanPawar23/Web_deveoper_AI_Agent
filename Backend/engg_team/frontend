@@ -1,0 +1,114 @@
+Certainly! It looks like you have a comprehensive outline for extending and enhancing your API application using SQLAlchemy, FastAPI, and other relevant tools. Here are some refined points and clarifications to ensure everything flows smoothly:
+
+### Advanced Features Development Outline
+
+#### Step 1: Implementing JWT Tokens & Security
+- **Generate JWT tokens for authentication**: Use libraries like `PyJWTEncoder` from the `jose` module.
+- **Integration with FastAPI Middleware**:
+    ```python
+    import jwt as pyjwt
+
+    # Initialize PyJWTEncoder in app context or init function
+    initializer = PyJWTEncoder(secret=SECRET_KEY, algorithm="HS256")
+    
+    @app.middleware("http")
+    def verify_jwt_middleware(request: Request):
+        token = request.headers.get('Authorization')
+        
+        if not token:
+            raise AuthenticationError()
+        
+        try:
+            decoded_payload = JWTVerifier.verify(token)
+        except jwt.exceptions.ExpiredSignatureError as e: 
+            # Custom error handling
+            ...
+        
+        return Response(status="Authenticated", payload=decoded_payload)
+
+    def parse_jwt_from_request_token(token):
+        return PYJWTEncoder.decode(token, secret=SECRET_KEY, algorithm="HS256")
+    
+    class JWTVerifier:
+        @staticmethod
+        def verify(encrypted_token: str) -> dict:
+            try:
+                decoded_payload = pyjwt.decode(encrypted_token, SECRET_KEY)
+            except jwt.exceptions.ExpiredSignatureError as e: 
+                ...
+            return decoded_payload
+    ```
+
+#### Step 2: Extending CRUD Operations
+- **Endpoints for Users and Todos**:
+    ```python
+    @app.get("/users/")
+    def read_users(db: sqlite3.Connection = Depends(get_db)):
+        # ORM query to fetch users
+    
+    @security.verify_jwt_middleware
+    def is_token_valid(request: Request):
+        token = request.headers.get('Authorization')
+        
+        if not token:
+            return False
+        
+        try:
+            decoded_payload = JWTVerifier(payload)
+        except jwt.exceptions.ExpiredSignatureError as e: 
+            ...
+        
+        user_id = decoded_payload['sub']
+        
+        session = Session.query(User).filter_by(id=user_id).first()
+        if not session or request and current_user.get('role') != 'admin':  # Adjust role check
+            return False
+        
+        # Valid token, perform operations like creating, updating users
+    
+    @app.post("/users/")
+    def create_new_users(request: CreateUser) -> User:
+        user = {
+            "name": request.name,
+            "id": db.execute(db.insert(User).values(name=request.name)).inserted_primary_key[0]
+        }
+        
+        Session.add(new_user)
+        Session.commit()
+      
+      # Implement other CRUD operations like PATCH, DELETE
+    ```
+
+#### Step 4: Transactions & Database Operations Using SQLAlchemy Session Context
+- **Transaction Management**:
+    ```python
+    session.begin()  # Begin the transaction.
+    
+    try: 
+       # Perform database queries and ORM manipulations.  
+       
+       # Add all changes made in one query to save performance (e.g., for transactions)
+       db.session.add(new_todo)
+       Session.commit()  # Save session after all operations complete inside session.
+         
+    except IntegrityError as e:
+        session.rollback()
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Resource is not unique.")
+        
+    finally:  
+        session.close()
+    ```
+
+### Additional Considerations
+- **Dependent Entities**: Handle relationships (polymorphic and otherwise) using SQLAlchemy polymorphic views.
+- **Response Modyl Definition**: Use PydanticModels or DTOs for API response data definitions to simplify complex conversions/operations involved in request handling.
+  
+By following this structured approach with clear dependencies, you can build feature by feature while ensuring that new additions integrate smoothly with existing systems. Here are few things to keep an eye on as you continue your development cycle:
+
+- **Middleware Best Practices**: Always clean up after middleware functions; ensure context is not leaked outside intended use scopes.
+  
+- **Test Coverage**: Ensure robust testing throughout implementation stages especially around security features like JWTs and API operations that depend heavily on state validation like permissions.
+
+- **Logging & Monitoring**: Enhance application logs for production readiness, add monitoring tools like Prometheus/Apigee to track performance.
+
+This structured approach outlines a plan to extend the core application architecture incrementally into more robust and secure services tailored towards real-world applications. Happy coding!

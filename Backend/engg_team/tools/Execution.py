@@ -52,9 +52,9 @@ class RunCommandTool(BaseTool):
             return e.stderr or str(e)
 
 class InstallDependenciesTool(BaseTool):
-    name = "Install Dependencies Tool"
+    name:str = "Install Dependencies Tool"
 
-    description = (
+    description:str = (
         "Installs all project dependencies using uv sync."
     )
 
